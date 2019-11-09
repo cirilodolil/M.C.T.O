@@ -11,11 +11,20 @@ String ChaveAPI = "";
 long TempoConexao; 
 Adafruit_BMP280 sensor_bmp;
 
+//capitador de agua 
+int clicks;
+float volume;
+int reed_switch_pin = 8;
+boolean last_reed_switch_state = LOW;
+
+
 WiFiClient client;
  
 void setup() {
  
 Serial.begin(9600);
+pinMode(reed_switch_pin, INPUT);
+
 }
 
 void loop() {
@@ -41,11 +50,29 @@ void FazConexaoWiFi()
     Serial.println("WiFi connectado com sucesso!");  
     Serial.println("IP obtido: ");
     Serial.println(WiFi.localIP());
+
+   
  
     delay(1000);
+
+
+
+    
 }
 void pressao()
 {
     Serial.println(sensor_bmp.readPressure());
+}
+
+void pluviometro()
+{
+   int reed_switch_state = digitalRead(reed_switch_pin);
+
+    if (last_reed_switch_state == LOW && reed_switch_state == HIGH) {
+    clicks++;
+    }
+
+     volume = clicks * 7.02;
+   
 }
 
