@@ -17,6 +17,10 @@ float volume;
 int reed_switch_pin = 8;
 boolean last_reed_switch_state = LOW;
 
+//vento
+int vento_pin =0;
+float valor_vento= 0;
+int direcao_vento = 0;
 
 WiFiClient client;
  
@@ -51,6 +55,9 @@ void FazConexaoWiFi()
     Serial.println("IP obtido: ");
     Serial.println(WiFi.localIP());
 
+
+   valor_vento = analogRead(vento_pin)* (5.0 / 1023.0);
+
    
  
     delay(1000);
@@ -74,5 +81,34 @@ void pluviometro()
 
      volume = clicks * 7.02;
    
+}
+
+void verificarDirecaoVento()
+{
+  if (valor_vento <= 0.27) {
+direcao_vento = 315;
+}
+else if (valor_vento <= 0.32) { 
+direcao_vento = 270;
+}
+else if (valor_vento <= 0.38) { 
+direcao_vento = 225;
+}
+else if (valor_vento <= 0.45) { 
+direcao_vento = 180;
+}
+else if (valor_vento <= 0.57) { 
+direcao_vento = 135;
+}
+else if (valor_vento <= 0.75) { 
+direcao_vento = 90;
+}
+else if (valor_vento <= 1.25) {  
+direcao_vento = 45;
+}
+else {  
+direcao_vento = 000;
+  
+}
 }
 
