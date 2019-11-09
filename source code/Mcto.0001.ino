@@ -1,3 +1,4 @@
+#include <Adafruit_BMP280.h>
 
 
 #include <ESP8266WiFi.h> 
@@ -8,6 +9,8 @@
 char EnderecoAPI[] = "";
 String ChaveAPI = "";
 long TempoConexao; 
+Adafruit_BMP280 sensor_bmp;
+
 WiFiClient client;
  
 void setup() {
@@ -20,7 +23,7 @@ void loop() {
 FazConexaoWiFi();
 }
 
-void FazConexaoWiFi(void)
+void FazConexaoWiFi()
 {
     client.stop();
     Serial.println("Conectando-se à rede WiFi...");
@@ -41,3 +44,8 @@ void FazConexaoWiFi(void)
  
     delay(1000);
 }
+void pressao()
+{
+    Serial.println(sensor_bmp.readPressure());
+}
+
